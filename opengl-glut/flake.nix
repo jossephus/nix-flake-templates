@@ -40,6 +40,7 @@
                     vulkan-loader
                     libxkbcommon
                     libdecor
+                    watchexec
                 ];
             in
             {
@@ -48,6 +49,7 @@
                     nativeBuildInputs = with pkgs;[ cmake pkg-config ];
                     shellHook = ''
                        export LD_LIBRARY_PATH=${pkgs.lib.makeLibraryPath libraries}:$LD_LIBRARY_PATH
+                        alias run="watchexec -e -r c -- g++ -o main main.c -lglut -lGL -lGLU"
                     '';
                 };
 
