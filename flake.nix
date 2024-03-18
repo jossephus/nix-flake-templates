@@ -18,7 +18,7 @@
      let pkgs = nixpkgs.legacyPackages.${system}; 
      in {
        templates = {
-         opengl-glut = {
+         opengl = {
            path = ./opengl-glut;
            description = "OpenGl + Glut for Nix Setup";
          };
