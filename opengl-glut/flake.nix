@@ -60,7 +60,7 @@
                         sleep 1 # give the server some time to start up
                         $CXX main.c -lglut -lGL -lGLU -o /dev/null
                         kill -s SIGINT $!
-                        alias run="watchexec -e -r c -- g++ -o main main.c -lglut -lGL -lGLU"
+                        alias run="watchexec -e c -r -- 'g++ -o main main.c -lglut -lGL -lGLU && ./main'"
                     '';
                 };
 
