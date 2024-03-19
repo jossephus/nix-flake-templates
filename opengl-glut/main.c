@@ -1,3 +1,4 @@
+#include <GL/freeglut_std.h>
 #include <GL/glut.h>
 
 // Function to initialize OpenGL

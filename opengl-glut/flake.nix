@@ -3,9 +3,10 @@
         nixpkgs.url = "nixpkgs/nixos-unstable";
         flake-utils.url = "github:numtide/flake-utils";
         nixgl.url = "github:guibou/nixGL";
+        mini-compile-commands = { url = "github:danielbarter/mini_compile_commands"; flake = false;};
     };
 
-    outputs = { nixpkgs, flake-utils, nixgl, ... }:
+    outputs = { nixpkgs, flake-utils, nixgl, mini-compile-commands, ... }:
         flake-utils.lib.eachDefaultSystem (system:
             let 
                 pkgs = import nixpkgs {
@@ -42,13 +43,23 @@
                     libdecor
                     watchexec
                 ];
+
+                mcc-env = (pkgs.callPackage mini-compile-commands {}).wrap pkgs.stdenv;
+
+                mkShell = pkgs.mkShell.override {
+                  stdenv = mcc-env;
+                };
             in
             {
-                devShell = pkgs.mkShell {
+                devShell = mkShell {
                     buildInputs = packages;
                     nativeBuildInputs = with pkgs;[ cmake pkg-config ];
                     shellHook = ''
                        export LD_LIBRARY_PATH=${pkgs.lib.makeLibraryPath libraries}:$LD_LIBRARY_PATH
+                       mini_compile_commands_server.py &
+                        sleep 1 # give the server some time to start up
+                        $CXX main.c -lglut -lGL -lGLU -o /dev/null
+                        kill -s SIGINT $!
                         alias run="watchexec -e -r c -- g++ -o main main.c -lglut -lGL -lGLU"
                     '';
                 };
