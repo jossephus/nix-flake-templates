@@ -7,6 +7,10 @@
            path = ./opengl-glut;
            description = "OpenGl + Glut for Nix Setup";
          };
+         rust = {
+            path = ./rust;
+            description = "Simple Rust Starter"; 
+         };
        };
   };
 }
