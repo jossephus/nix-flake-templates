@@ -11,6 +11,10 @@
             path = ./rust;
             description = "Simple Rust Starter"; 
          };
+         init = {
+            path = ./init; 
+            description = "Initialize only flake.nix";
+         };
        };
   };
 }
