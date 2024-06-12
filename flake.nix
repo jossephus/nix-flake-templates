@@ -19,6 +19,10 @@
         path = ./poetry; 
         description = "python with poetry starter for my ML classes";
       };
+      zig = {
+        path = ./zig;
+        description = "Ziiiig";
+      };
     };
   };
 }
