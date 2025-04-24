@@ -23,6 +23,10 @@
         path = ./zig;
         description = "Ziiiig";
       };
+      zig-raylib = {
+        path = ./zig-raylib;
+        description = "Zig + Raylib starter";
+      };
     };
   };
 }

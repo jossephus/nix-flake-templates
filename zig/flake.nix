@@ -5,14 +5,8 @@
     nixpkgs.url = "nixpkgs/nixos-unstable";
     flake-utils.url = "github:numtide/flake-utils";
 
-    zig = {
-      url = "github:mitchellh/zig-overlay";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    zls = {
-      url = "github:zigtools/zls/master";
-      inputs.nixpkgs.follows = "nixpkgs";
+    ghostty = {
+      url = "github:ghostty-org/ghostty";
     };
   };
 
@@ -20,22 +14,16 @@
     self,
     nixpkgs,
     flake-utils,
-    zig,
-    zls,
+    ghostty,
   }:
     flake-utils.lib.eachDefaultSystem (system: let
-      overlay = [
-         (final: prev: {
-           zigpkgs = zig.packages.${prev.system};
-         })
-      ];
       pkgs = nixpkgs.legacyPackages.${system};
     in {
       devShell = pkgs.mkShell {
         buildInputs = with pkgs; [
-          zig.packages.${system}.master
-          zls.packages.${system}.default
+          ghostty.packages.x86_64-linux.default
         ];
       };
+      packages.default = ghostty.packages.x86_64-linux.default;
     });
 }
